@@ -28,17 +28,19 @@
     --shadow-lg: 0 28px 70px rgba(15,23,42,0.20);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
   body {
     font-family: 'Inter', sans-serif;
     background: var(--white);
     color: var(--gray-800);
     overflow-x: hidden;
+    width: 100%;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
   footer { margin-top: auto; }
   ::selection { background: var(--orange); color: var(--navy); }
   ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -78,6 +80,26 @@
     box-shadow: 0 6px 18px rgba(23,201,168,0.35);
   }
   .nav-cta:hover { background: var(--white) !important; color: var(--navy) !important; transform: translateY(-1px); }
+
+  /* ─── HAMBURGER (mobile nav toggle) ─── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    background: transparent; border: none; cursor: pointer;
+    padding: 0; flex-shrink: 0;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--white); border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  nav.nav-open .nav-hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  nav.nav-open .nav-hamburger span:nth-child(2) { opacity: 0; }
+  nav.nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   /* ─── PAGE SECTIONS ─── */
   .page { display: none; padding-top: 72px; }
@@ -546,6 +568,57 @@
   }
 
   /* ─── RESPONSIVE ─── */
+
+  /* Global overflow safety net: fixed multi-column inline grids used
+     throughout the products / compare / industry / services pages are
+     clamped down here so they can never force the page wider than the
+     viewport. */
+  @media(max-width: 900px) {
+    [style*="grid-template-columns:repeat(4,1fr)"],
+    [style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: 1fr 1fr !important; }
+  }
+  @media(max-width: 640px) {
+    [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+    [style*="font-size:64px"] { font-size: 42px !important; }
+    [style*="font-size:48px"] { font-size: 34px !important; }
+    [style*="font-size:40px"] { font-size: 30px !important; }
+    [style*="font-size:38px"] { font-size: 28px !important; }
+    [style*="font-size:36px"] { font-size: 26px !important; }
+    [style*="font-size:32px"] { font-size: 24px !important; }
+    [style*="padding:56px 80px"],
+    [style*="padding:56px 60px"],
+    [style*="padding:48px 60px"] { padding: 32px 20px !important; }
+  }
+
+  /* ─── MOBILE NAV (hamburger) ─── */
+  @media(max-width: 900px) {
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      flex-direction: column; align-items: stretch;
+      gap: 2px;
+      background: rgba(10,14,27,0.97);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 16px 20px;
+      max-height: 0;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-height 0.3s ease, opacity 0.25s ease;
+    }
+    nav.nav-open .nav-links {
+      max-height: calc(100vh - 72px);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .nav-links a { width: 100%; text-align: left; padding: 13px 14px; }
+    .nav-cta { margin-left: 0; margin-top: 6px; text-align: center; }
+    #nav-admin-actions { flex-direction: column; align-items: stretch; width: 100%; gap: 6px; margin-top: 6px; }
+    #nav-admin-actions a { width: 100%; text-align: center; }
+  }
+
   @media(max-width: 1024px) {
     .hero { grid-template-columns: 1fr; padding: 56px 40px; gap: 0; }
     .hero-visual { display: none; }
@@ -566,7 +639,8 @@
   @media(max-width: 640px) {
     nav { padding: 0 16px; height: 60px; }
     .nav-logo { font-size: 19px; }
-    .nav-links { display: none; }
+    .nav-links { top: 60px; }
+    nav.nav-open .nav-links { max-height: calc(100vh - 60px); }
     .page { padding-top: 60px; }
     .hero { padding: 36px 20px; min-height: calc(100vh - 60px); }
     .hero h1 { font-size: clamp(34px, 9vw, 48px); }
@@ -765,6 +839,9 @@
       <a href="#" onclick="adminLogout()" class="nav-logout">Logout</a>
     </div>
   </div>
+  <button type="button" class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ═══════════════════ HOME PAGE ═══════════════════ -->
@@ -2005,7 +2082,7 @@ function handleApplySubmit(e) {
   };
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://18.144.163.173:3000/form', true);
+  xhr.open('POST', '/api/form', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onreadystatechange = function() {
     if (xhr.readyState !== 4) return;
@@ -2045,7 +2122,7 @@ function handleAdminLogin(e) {
   };
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://18.144.163.173:3000/auth/login', true);
+  xhr.open('POST', '/api/auth/login', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onreadystatechange = function() {
     if (xhr.readyState !== 4) return;
@@ -2094,7 +2171,7 @@ function loadDashboard() {
   container.innerHTML = '<div class="dash-loading"><div class="dash-spinner"></div>Loading applications...</div>';
 
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'http://18.144.163.173:3000/form', true);
+  xhr.open('GET', '/api/form', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   if (adminToken) {
     xhr.setRequestHeader('Authorization', 'Bearer ' + adminToken);
@@ -2179,6 +2256,15 @@ function animateNumbers() {
   }
 }
 
+// ─── MOBILE NAV TOGGLE ──────────────────────────────────────
+function toggleMobileNav() {
+  var navEl = document.querySelector('nav');
+  var btn = document.getElementById('nav-hamburger');
+  if (!navEl) return;
+  var isOpen = navEl.classList.toggle('nav-open');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
 // ─── INIT ─────────────────────────────────────────────────
 window.addEventListener('load', function() {
   animateNumbers();
@@ -2192,6 +2278,20 @@ window.addEventListener('load', function() {
   var loginForm = document.getElementById('admin-login-form');
   if (loginForm) {
     loginForm.addEventListener('submit', handleAdminLogin, false);
+  }
+
+  var navEl = document.querySelector('nav');
+  var hamburgerBtn = document.getElementById('nav-hamburger');
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', toggleMobileNav, false);
+  }
+  // Close the mobile menu whenever a nav link is used to change page
+  var navLinkEls = document.querySelectorAll('.nav-links a');
+  for (var n = 0; n < navLinkEls.length; n++) {
+    navLinkEls[n].addEventListener('click', function() {
+      if (navEl) navEl.classList.remove('nav-open');
+      if (hamburgerBtn) hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }, false);
   }
 });
 </script>
