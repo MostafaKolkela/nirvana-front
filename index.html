@@ -41,7 +41,7 @@
     --shadow-lg: 0 28px 70px rgba(15,23,42,0.20);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+  html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; overscroll-behavior-x: none; }
   body {
     font-family: 'Inter', sans-serif;
     background: var(--white);
@@ -1833,10 +1833,10 @@
           <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6;">Transportation attorneys for contracts, disputes, DOT violations, accident liability, lease agreements, and business entity formation for owner-operators and carriers.</p>
         </div>
         <!-- Recruiting - spans full width for symmetry -->
-        <div style="grid-column:1/-1; background:rgba(23,201,168,0.08); border:1px solid rgba(23,201,168,0.4); border-radius:16px; padding:28px 40px; display:flex; align-items:center; gap:32px;" onmouseover="this.style.background='rgba(23,201,168,0.14)'" onmouseout="this.style.background='rgba(23,201,168,0.08)'">
+        <div style="grid-column:1/-1; background:rgba(23,201,168,0.08); border:1px solid rgba(23,201,168,0.4); border-radius:16px; padding:28px 40px; display:flex; flex-wrap:wrap; align-items:center; gap:32px;" onmouseover="this.style.background='rgba(23,201,168,0.14)'" onmouseout="this.style.background='rgba(23,201,168,0.08)'">
           <div style="font-size:48px; flex-shrink:0;">👥</div>
-          <div>
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;">
+          <div style="min-width:0; flex:1 1 240px;">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:6px;">
               <div style="font-family:'Outfit',sans-serif; font-size:28px; font-weight:900; color:var(--orange); text-transform:uppercase;">Recruiting</div>
               <div style="font-size:12px; color:rgba(255,255,255,0.6); font-weight:600; text-transform:uppercase; letter-spacing:1px; background:rgba(23,201,168,0.2); padding:3px 10px; border-radius:10px;">Driver & Staff Hire</div>
             </div>
@@ -2070,17 +2070,25 @@ function showPage(id, anchorId) {
   if (navLink) navLink.classList.add('active');
 
   if (anchorId) {
-    // Let the newly-active page render, then smooth-scroll to the specific section
+    // Let the newly-active page render, then smooth-scroll to the specific section.
+    // NOTE: we deliberately do NOT use anchorEl.scrollIntoView() here. On mobile
+    // browsers (especially iOS Safari) scrollIntoView() will also try to adjust
+    // the horizontal scroll position to bring the element fully into view, which
+    // causes the page to shift sideways and reveal a white gap. Calculating the
+    // target Y position ourselves and forcing left:0 avoids that entirely.
     setTimeout(function() {
       var anchorEl = document.getElementById(anchorId);
-      if (anchorEl && anchorEl.scrollIntoView) {
-        anchorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (anchorEl) {
+        var rect = anchorEl.getBoundingClientRect();
+        var targetY = rect.top + window.pageYOffset - 96; // matches scroll-margin-top offset
+        if (targetY < 0) targetY = 0;
+        window.scrollTo({ top: targetY, left: 0, behavior: 'smooth' });
       } else {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       }
     }, 50);
   } else {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }
 
   if (id === 'dashboard') {
