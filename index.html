@@ -105,6 +105,9 @@
   .page { display: none; padding-top: 72px; }
   .page.active { display: block; flex: 1; }
 
+  /* ─── ANCHOR SCROLL OFFSET (for in-page section links) ─── */
+  [data-anchor-target] { scroll-margin-top: 96px; }
+
   /* ─── HERO ─── */
   .hero {
     background:
@@ -834,7 +837,7 @@
     <a href="#page-process" onclick="showPage('process')" id="nav-process">How It Works</a>
     <a href="#page-industry" onclick="showPage('industry')" id="nav-industry">Industry</a>
     <a href="#page-services" onclick="showPage('services')" id="nav-services">Services</a>
-    <a href="#page-process" onclick="showPage('process')" class="nav-cta">Apply Now</a>
+    <a href="#apply-now" onclick="return showPage('process','apply-now')" class="nav-cta">Apply Now</a>
     <div id="nav-admin-actions">
       <a href="#page-dashboard" onclick="showPage('dashboard')" id="nav-dashboard" style="color:var(--gold)!important;">Dashboard</a>
       <a href="#page-home" onclick="adminLogout()" class="nav-logout">Logout</a>
@@ -981,7 +984,7 @@
         <h3>Full IFTA Reporting</h3>
         <p>We handle complete IFTA reporting for your fleet. Itemized fuel statements sorted by state, date, and jurisdiction — filed accurately and on time every quarter.</p>
       </div>
-      <div class="benefit-card">
+      <div id="fuel-finder-app" data-anchor-target class="benefit-card">
         <div class="benefit-icon">📱</div>
         <h3>Mobile App & Fuel Finder</h3>
         <p>Our mobile app lets you find the cheapest discounted fuel along your route, monitor account balance, and manage all transactions in real-time.</p>
@@ -1045,7 +1048,7 @@
 
 <!-- ═══════════════════ PRODUCTS PAGE ═══════════════════ -->
 <div id="page-products" class="page">
-  <section style="background:var(--navy); padding-bottom:40px;">
+  <section id="nirvana-card" data-anchor-target style="background:var(--navy); padding-bottom:40px;">
     <div class="section-label">Our Fleet Card</div>
     <div class="section-title" style="color:var(--white);">The <span style="color:var(--orange);">Nirvana Card</span> —<br>Built for Truckers</div>
     <p class="section-sub" style="color:var(--gray-400);">One card. Industry-leading discounts, zero fees, full IFTA reporting, and nationwide coverage at all major truck stops.</p>
@@ -1119,7 +1122,7 @@
       <div class="section-title">Prepaid or Preloaded —<br>You Choose</div>
     </div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; max-width:900px; margin:0 auto;">
-      <div style="background:var(--white); border-radius:20px; overflow:hidden; border:2px solid var(--gray-200);">
+      <div id="prepaid-option" data-anchor-target style="background:var(--white); border-radius:20px; overflow:hidden; border:2px solid var(--gray-200);">
         <div style="background:var(--navy); padding:36px 40px;">
           <div style="font-size:11px; color:var(--orange); font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">Like a Debit Card</div>
           <div style="font-family:'Outfit',sans-serif; font-size:38px; font-weight:900; color:var(--white); text-transform:uppercase;">Prepaid<br>Card</div>
@@ -1136,7 +1139,7 @@
           </div>
         </div>
       </div>
-      <div style="background:var(--white); border-radius:20px; overflow:hidden; border:2px solid var(--orange);">
+      <div id="preloaded-option" data-anchor-target style="background:var(--white); border-radius:20px; overflow:hidden; border:2px solid var(--orange);">
         <div style="background:linear-gradient(135deg,var(--orange),var(--orange-dark)); padding:36px 40px;">
           <div style="font-size:11px; color:rgba(255,255,255,0.8); font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">Like a Credit Card</div>
           <div style="font-family:'Outfit',sans-serif; font-size:38px; font-weight:900; color:var(--white); text-transform:uppercase;">Preloaded<br>Card</div>
@@ -1190,6 +1193,7 @@
 
 <!-- ═══════════════════ COMPARE PAGE ═══════════════════ -->
 <div id="page-compare" class="page">
+  <div id="compare-cards" data-anchor-target></div>
   <section class="compare-section">
     <div class="section-header">
       <div class="section-label">Competitor Analysis</div>
@@ -1458,7 +1462,7 @@
         </div>
       </div>
 
-      <div class="process-form-box">
+      <div id="apply-now" data-anchor-target class="process-form-box">
         <h3>Apply Now</h3>
         <p>Fill out the form below and our team will reach out within 24 hours to complete your application.</p>
         <form id="apply-form">
@@ -1774,42 +1778,42 @@
       <!-- Services grid radiating out -->
       <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
         <!-- Safety -->
-        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
+        <div id="safety-dot" data-anchor-target style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
           <div style="font-size:36px; margin-bottom:14px;">🛡️</div>
           <div style="font-family:'Outfit',sans-serif; font-size:24px; font-weight:900; color:#A89BFF; text-transform:uppercase; margin-bottom:6px;">Safety</div>
           <div style="font-size:13px; color:rgba(255,255,255,0.6); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Compliance & DOT</div>
           <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6;">DOT compliance management, safety audits, driver qualification files, drug & alcohol testing programs, and FMCSA violation monitoring.</p>
         </div>
         <!-- Dispatch -->
-        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
+        <div id="dispatch" data-anchor-target style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
           <div style="font-size:36px; margin-bottom:14px;">📡</div>
           <div style="font-family:'Outfit',sans-serif; font-size:24px; font-weight:900; color:#A89BFF; text-transform:uppercase; margin-bottom:6px;">Dispatch</div>
           <div style="font-size:13px; color:rgba(255,255,255,0.6); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Load Coordination</div>
           <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6;">Professional freight dispatchers to find and book loads, negotiate rates, manage broker relationships, and maximize your truck's revenue per mile.</p>
         </div>
         <!-- Accounting -->
-        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
+        <div id="accounting-ifta" data-anchor-target style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
           <div style="font-size:36px; margin-bottom:14px;">📊</div>
           <div style="font-family:'Outfit',sans-serif; font-size:24px; font-weight:900; color:#A89BFF; text-transform:uppercase; margin-bottom:6px;">Accounting</div>
           <div style="font-size:13px; color:rgba(255,255,255,0.6); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Books & Reporting</div>
           <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6;">Full bookkeeping, P&L statements, quarterly tax preparation, IFTA filing, expense tracking, and financial reporting tailored for trucking businesses.</p>
         </div>
         <!-- Factoring -->
-        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
+        <div id="factoring" data-anchor-target style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
           <div style="font-size:36px; margin-bottom:14px;">💵</div>
           <div style="font-family:'Outfit',sans-serif; font-size:24px; font-weight:900; color:#A89BFF; text-transform:uppercase; margin-bottom:6px;">Factoring</div>
           <div style="font-size:13px; color:rgba(255,255,255,0.6); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Cash Flow Support</div>
           <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6;">Invoice factoring to get paid fast on your freight bills. Turn 30–90 day broker payments into same-day or next-day cash — keep your operation running smoothly.</p>
         </div>
         <!-- Insurance -->
-        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
+        <div id="insurance" data-anchor-target style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
           <div style="font-size:36px; margin-bottom:14px;">🔒</div>
           <div style="font-family:'Outfit',sans-serif; font-size:24px; font-weight:900; color:#A89BFF; text-transform:uppercase; margin-bottom:6px;">Insurance</div>
           <div style="font-size:13px; color:rgba(255,255,255,0.6); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Coverage & Claims</div>
           <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6;">Commercial truck insurance, cargo coverage, general liability, occupational accident, and claims support through our network of verified transportation insurers.</p>
         </div>
         <!-- Lawyer -->
-        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
+        <div id="legal-recruiting" data-anchor-target style="background:rgba(255,255,255,0.05); border:1px solid rgba(139,124,255,0.3); border-radius:16px; padding:28px 24px; backdrop-filter:blur(10px); transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(139,124,255,0.7)';this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.borderColor='rgba(139,124,255,0.3)';this.style.background='rgba(255,255,255,0.05)'">
           <div style="font-size:36px; margin-bottom:14px;">⚖️</div>
           <div style="font-family:'Outfit',sans-serif; font-size:24px; font-weight:900; color:#A89BFF; text-transform:uppercase; margin-bottom:6px;">Lawyer</div>
           <div style="font-size:13px; color:rgba(255,255,255,0.6); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Legal Support</div>
@@ -1831,7 +1835,7 @@
   </section>
 
   <!-- CTA Banner -->
-  <section style="background:var(--orange); padding:56px 80px; text-align:center;">
+  <section id="support" data-anchor-target style="background:var(--orange); padding:56px 80px; text-align:center;">
     <div style="font-family:'Outfit',sans-serif; font-size:14px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.8); margin-bottom:12px;">One Call Does It All</div>
     <div style="font-family:'Outfit',sans-serif; font-size:clamp(36px,5vw,60px); font-weight:900; color:var(--white); text-transform:uppercase; line-height:1; margin-bottom:16px;">Contact Us — Get Everything<br>Your Fleet Needs</div>
     <p style="font-size:16px; color:rgba(255,255,255,0.85); max-width:600px; margin:0 auto; line-height:1.7;">We are your single point of contact in trucking. Through our strong partner network, we connect you with verified specialists — with exclusive discounts and zero search time.</p>
@@ -1963,32 +1967,32 @@
     </div>
     <div class="footer-col">
       <h4>Products</h4>
-      <a href="#page-products" onclick="showPage('products')">Nirvana Card</a>
-      <a href="#page-products" onclick="showPage('products')">Prepaid Option</a>
-      <a href="#page-products" onclick="showPage('products')">Preloaded Option</a>
-      <a href="#page-compare" onclick="showPage('compare')">Compare Cards</a>
+      <a href="#nirvana-card" onclick="return showPage('products','nirvana-card')">Nirvana Card</a>
+      <a href="#prepaid-option" onclick="return showPage('products','prepaid-option')">Prepaid Option</a>
+      <a href="#preloaded-option" onclick="return showPage('products','preloaded-option')">Preloaded Option</a>
+      <a href="#compare-cards" onclick="return showPage('compare','compare-cards')">Compare Cards</a>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
-      <a href="#page-services" onclick="showPage('services')">Safety & DOT</a>
-      <a href="#page-services" onclick="showPage('services')">Dispatch</a>
-      <a href="#page-services" onclick="showPage('services')">Accounting & IFTA</a>
-      <a href="#page-services" onclick="showPage('services')">Factoring</a>
-      <a href="#page-services" onclick="showPage('services')">Insurance</a>
-      <a href="#page-services" onclick="showPage('services')">Legal & Recruiting</a>
+      <a href="#safety-dot" onclick="return showPage('services','safety-dot')">Safety & DOT</a>
+      <a href="#dispatch" onclick="return showPage('services','dispatch')">Dispatch</a>
+      <a href="#accounting-ifta" onclick="return showPage('services','accounting-ifta')">Accounting & IFTA</a>
+      <a href="#factoring" onclick="return showPage('services','factoring')">Factoring</a>
+      <a href="#insurance" onclick="return showPage('services','insurance')">Insurance</a>
+      <a href="#legal-recruiting" onclick="return showPage('services','legal-recruiting')">Legal & Recruiting</a>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
-      <a href="#page-process" onclick="showPage('process')">How It Works</a>
-      <a href="#page-industry" onclick="showPage('industry')">Industry Info</a>
-      <a href="#page-process" onclick="showPage('process')">Apply Now</a>
-      <a href="#page-home" onclick="showPage('home')">Fuel Finder App</a>
-      <a href="#page-services" onclick="showPage('services')">24/7 Support</a>
-      <a href="#page-admin-login" onclick="showPage('admin-login')" style="color:var(--gray-600); font-size:12px; margin-top:8px; opacity:0.6;">Admin Login</a>
+      <a href="#page-process" onclick="return showPage('process')">How It Works</a>
+      <a href="#page-industry" onclick="return showPage('industry')">Industry Info</a>
+      <a href="#apply-now" onclick="return showPage('process','apply-now')">Apply Now</a>
+      <a href="#fuel-finder-app" onclick="return showPage('home','fuel-finder-app')">Fuel Finder App</a>
+      <a href="#support" onclick="return showPage('services','support')">24/7 Support</a>
+      <a href="#page-admin-login" onclick="return showPage('admin-login')" style="color:var(--gray-600); font-size:12px; margin-top:8px; opacity:0.6;">Admin Login</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2024 United Transport LLC · All rights reserved</p>
+    <p>© 2026 Nirvana Enterprises LLC · All rights reserved</p>
   </div>
 </footer>
 <script>
@@ -2038,7 +2042,7 @@ function updateNavForAdmin() {
 }
 
 // ─── PAGE NAVIGATION ─────────────────────────────────────
-function showPage(id) {
+function showPage(id, anchorId) {
   var pages = document.querySelectorAll('.page');
   for (var i = 0; i < pages.length; i++) {
     pages[i].classList.remove('active');
@@ -2051,7 +2055,21 @@ function showPage(id) {
   if (target) target.classList.add('active');
   var navLink = document.getElementById('nav-' + id);
   if (navLink) navLink.classList.add('active');
-  window.scrollTo(0, 0);
+
+  if (anchorId) {
+    // Let the newly-active page render, then smooth-scroll to the specific section
+    setTimeout(function() {
+      var anchorEl = document.getElementById(anchorId);
+      if (anchorEl && anchorEl.scrollIntoView) {
+        anchorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }, 50);
+  } else {
+    window.scrollTo(0, 0);
+  }
+
   if (id === 'dashboard') {
     setTimeout(loadDashboard, 50);
   }
